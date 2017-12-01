@@ -1,40 +1,15 @@
-//引入vue.js文件
+// The Vue build version to load with the `import` command
+// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-//引入app.vue 组件的分离模式
-import App from './App.vue'
+import App from './App'
+import router from './router'
 
-//引入轮播文件
-import VueAwesomeSwiper from 'vue-awesome-swiper'
-require('swiper/dist/css/swiper.css')
-Vue.use(VueAwesomeSwiper)
+Vue.config.productionTip = false
 
-//引入vue-resource文件
-import VueResource from 'vue-resource'
-Vue.use(VueResource)
-
-//引入vue-router文件
-import VueRouter from 'vue-router'
-Vue.use(VueRouter)
-
-//引入视图
-import forgetPwd from './views/signRegisterView/forgetPwd.vue'
-import signRegister from './views/signRegisterView/signRegister.vue'
-import startPage from './views/signRegisterView/startPage.vue'
-import shopping from './views/shopping/shopping.vue'
-
-//配置路由
-let vueRouter = new VueRouter({
-	routes:[
-		{path: '/',redirect: 'startPage'},
-		{path: '/signRegister/:type',component: signRegister},
-		{path: '/startPage',component: startPage},
-		{path: '/forgetPwd/:id',component: forgetPwd},
-		{path: '/shopping',component: shopping},
-	]
-})
-
+/* eslint-disable no-new */
 new Vue({
   el: '#app',
-  render: h => h(App),
-  router: vueRouter
+  router,
+  template: '<App/>',
+  components: { App }
 })
