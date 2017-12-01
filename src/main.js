@@ -4,9 +4,9 @@ import Vue from 'vue'
 import App from './App.vue'
 
 //引入轮播文件
-//import VueAwesomeSwiper from 'vue-awesome-swiper'
-//require('swiper/dist/css/swiper.css')
-//Vue.use(VueAwesomeSwiper)
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+require('swiper/dist/css/swiper.css')
+Vue.use(VueAwesomeSwiper)
 
 //引入vue-resource文件
 import VueResource from 'vue-resource'
@@ -20,6 +20,7 @@ Vue.use(VueRouter)
 import forgetPwd from './views/signRegisterView/forgetPwd.vue'
 import signRegister from './views/signRegisterView/signRegister.vue'
 import startPage from './views/signRegisterView/startPage.vue'
+import shopping from './views/shopping/shopping.vue'
 
 //配置路由
 let vueRouter = new VueRouter({
@@ -27,7 +28,8 @@ let vueRouter = new VueRouter({
 		{path: '/',redirect: 'startPage'},
 		{path: '/signRegister/:type',component: signRegister},
 		{path: '/startPage',component: startPage},
-		{path: '/forgetPwd/:id',component: forgetPwd}
+		{path: '/forgetPwd/:id',component: forgetPwd},
+		{path: '/shopping',component: shopping},
 	]
 })
 

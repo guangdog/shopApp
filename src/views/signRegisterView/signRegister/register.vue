@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<div class="box" id="zhuce">
-			<p><input type="text" @focus="clear('phone')" :class="{red:phoneRed}" v-model="phone" placeholder="请输入您的手机号"><img src="../../../assets/images/icon1.jpg"></p>
-			<p><input type="text" @focus="clear('yzm')" :class="{red:yzmRed}" v-model="yzm" placeholder="请输入验证码"><img src="../../../assets/images/icon2.jpg"></p>
+			<p><input type="text" @focus="clear('phone')" @input="isyzm()" :class="{red:phoneRed}" v-model="phone" placeholder="请输入您的手机号"><img src="../../../assets/images/icon1.jpg"></p>
+			<p><input type="text" @focus="clear('yzm')" :class="{red:yzmRed}" v-model="yzm" placeholder="请输入验证码"><img src="../../../assets/images/icon2.jpg"><button :class="{succ:issucc}" class="hq" @click="getyzm()">{{yzmts}}</button></p>
 			<p><input type="text" @focus="clear('pwd')" :class="{red:pwdRed}" v-model="pwd" placeholder="请输入密码"><img src="../../../assets/images/icon3.jpg"></p>
 			<p><input type="text" @focus="clear('qrpwd')" :class="{red:qrpwdRed}" v-model="qrpwd" placeholder="请确认密码"><img src="../../../assets/images/icon4.png"></p>
 			<p><button @click="register()">注册</button></p>
@@ -22,7 +22,10 @@
 			 	phoneRed:false,
 			 	yzmRed:false,
 			 	pwdRed:false,
-			 	qrpwdRed:false
+			 	qrpwdRed:false,
+			 	yzmts:'获取验证码',
+			 	issucc: false,
+			 	code:''
 		    }
 		},
 		methods:{
@@ -68,12 +71,17 @@
 						this.yzm='验证码不能为空'
 						this.yzmRed=true
 					}else{
+						if(this.code=='' || this.code!=this.yzm){
+							this.yzm='请填写正确的验证码'
+							this.yzmRed=true
+							return ;
+						}
 						if(this.pwd==''){
 							this.pwd='密码不能为空'
 							this.pwdRed=true
 						}else{
 							if(this.qrpwd==this.pwd){							
-								var url = 'http://114.55.249.153:8028/login/register';
+								var url = 'http://114.55.249.153:8028/login/regWithPhone';
 								var options = {
 									phone:this.phone,
 									password:this.pwd
@@ -92,6 +100,40 @@
 					}
 				}
 			},
+			//验证码是否可用
+			isyzm(){
+				if((/^1[3|4|5|7|8][0-9]\d{4,8}$/.test(this.phone))){
+					this.issucc=true
+				}else{
+					this.issucc=false
+				}
+			},
+			//获取验证码
+			getyzm(){
+				if(this.issucc==true){
+					this.issucc=false
+					let time = 10;
+					let s;
+					s=setInterval(()=>{
+						if(time<=0){
+							clearInterval(s);
+							this.issucc=true
+							this.yzmts= '获取验证码'
+							return ;
+						}
+						time--
+						this.yzmts= time+'s后请重试'
+					},1000)
+					var url = 'http://114.55.249.153:8028/login/sendCode';
+					var options = {
+						phone:this.phone
+					}
+					this.$http.post(url,options,{ emulateJSON: true }).then((res)=>{
+						console.log(res.data)
+						this.code=res.data.code
+					})
+				}
+			}
 		}
 		
 	}
@@ -131,6 +173,17 @@
 		height: 30px;
 	}
 	
+	.box p .succ{
+		background: deepskyblue;
+	}
+	
+	.hq{
+		position: absolute;
+		right: 0;
+		top: -3px;
+		width: 30%;
+		background: grey;
+	}
 	
 	button {
 		width: 90%;

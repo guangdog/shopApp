@@ -42,7 +42,7 @@
 					this.phone='手机号不能为空'
 					this.phoneRed=true
 				}else{
-					if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(this.phone))){
+					if(!(/^1[3|4|5|7|8][0-9]\d{4,8}$/.test(this.phone))){
 						this.phone='请填写正确的手机号码'
 						this.phoneRed=true
 						return ;
@@ -51,11 +51,22 @@
 						this.pwd='密码不能为空'
 						this.pwdRed=true
 					}else{
-//						this.$http.post(url,options,{ emulateJSON: true }).then((res)=>{
-							if(res.data.flag=='1'){
-								this.$router.push('/startPage');
+						//登录发送数据 判断用户与密码是否正确
+						let url = 'http://114.55.249.153:8028/login/LoginByPhone';
+						var options = {
+							phone: this.phone,
+							password: this.pwd,
+						}
+						this.$http.post(url,options,{ emulateJSON: true }).then((res)=>{
+							console.log(res.data)
+							if(res.data['error_code']=='0'){
+								this.$router.push('/shopping');
+							}else{
+								this.phone='手机号码或密码不正确'
+								this.phoneRed=true
+								this.pwd=''
 							}
-//						})
+						})
 					}
 				}
 			},

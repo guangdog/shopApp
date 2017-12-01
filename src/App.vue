@@ -24,7 +24,7 @@ a{
 	color: black;
 	text-decoration: none;
 }
-input{
+input,button{
 	outline:none
 }
 </style>
