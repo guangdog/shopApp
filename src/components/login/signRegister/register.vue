@@ -111,7 +111,7 @@ export default {
     getyzm () {
       if(this.issucc == true){
         this.issucc = false
-        let time = 10;
+        let time = 60;
         let s;
          s = setInterval(()=>{
           if(time<=0){
