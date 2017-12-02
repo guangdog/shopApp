@@ -42,7 +42,7 @@ export default {
         this.phone = '手机号不能为空'
         this.phoneRed = true
       } else {
-        if (!(/^1[3|4|5|7|8][0-9]\d{4,8}$/.test(this.phone))) {
+        if (!(/^1[3|4|5|7|8][0-9]\d{8}$/.test(this.phone))) {
           this.phone = '请填写正确的手机号码'
           this.phoneRed = true
           return

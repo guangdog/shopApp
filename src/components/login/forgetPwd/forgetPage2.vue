@@ -2,10 +2,10 @@
   <div class="pwd">
     <p>短信验证码已发送，请输入验证码</p>
     <p class="margin">
-	    <input type="text" placeholder="验证码" />
+	    <input type="text" placeholder="验证码" :class="{red: disable}" v-model="mycode" @input="iscode()" @focus="clear()"/>
     </p>
-    <p><button class="red" @click="nextpage()">下一步</button></p>
-    <p><button class="clear">28’后重新发送</button></p>
+    <p><button :class="{grey: disable}" @click="nextpage()">下一步</button></p>
+    <p><button class="clear">{{time}}’后重新发送</button></p>
   </div>
 </template>
 
@@ -13,13 +13,43 @@
 export default {
   data () {
     return {
-
+      code: '',
+      mycode: '',
+      disable: true,
+      time: 30
     }
   },
   methods: {
     nextpage () {
-      this.$router.push('/forgetPwd/3')
+      if (this.code === this.mycode) {
+        this.$router.push('/forgetPwd/3')
+      } else {
+        this.mycode = '验证码错误'
+        this.disable = true
+      }
+    },
+    iscode () {
+      if (this.mycode !== '') {
+        this.disable = false
+      } else {
+        this.disable = true
+      }
+    },
+    clear () {
+      if (this.mycode === '验证码错误') {
+        this.mycode = ''
+      }
     }
+  },
+  created () {
+    this.code = localStorage.getItem('code')
+    var s = setInterval(() => {
+      if (this.time <= 0) {
+        clearInterval(s)
+        return
+      }
+      this.time--
+    }, 1000)
   }
 }
 </script>
@@ -27,6 +57,14 @@ export default {
 <style scoped="scoped">
 	.pwd{
 		padding: 30px 0;
+	}
+	.grey{
+		background: grey;
+		border: none;
+		color: white;
+	}
+	.red{
+		color: red;
 	}
 	P{
 		text-align: center;
@@ -48,10 +86,8 @@ export default {
 		border: 1px solid #ca3232;
 		border-radius: 4px;
 		line-height: 40px;
-	}
-	.red{
-		background: #ca3232;
 		color: white;
+		background: #ca3232;
 	}
 	.clear{
 		border: none;

@@ -26,3 +26,21 @@ export function SendMMSCode (data) {
     data
   })
 }
+
+// 找回密码
+export function findPassWord (data) {
+  return fetch({
+    url: '/login/findPasswordByPhone',
+    method: 'post',
+    data
+  })
+}
+
+// 设置新密码
+export function setNewPassWord (data) {
+  return fetch({
+    url: '/login/newPasswordByPhone',
+    method: 'post',
+    data
+  })
+}

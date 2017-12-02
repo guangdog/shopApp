@@ -2,25 +2,66 @@
   <div class="pwd">
     <p>设置新密码</p>
     <p>
-	    <input type="text" placeholder="新密码" />
+	    <input type="text" placeholder="新密码" v-model="newpwd" />
     </p>
     <p class="margin">
-	    <input class="surePwd" type="text" placeholder="确认新密码" />
+	    <input class="surePwd" type="text" placeholder="确认新密码" v-model="newpwd2" />
     </p>
-    <p><button class="red" @click="nextpage()">完成</button></p>
+    <p><button  :class="{grey: disable}" @click="nextpage()">完成</button></p>
   </div>
 </template>
 
 <script>
+import { setNewPassWord } from '../../../api/login'
 export default {
   data () {
     return {
-
+      newpwd: '',
+      newpwd2: '',
+      disable: true
     }
   },
   methods: {
     nextpage () {
-      this.$router.push('/shopping')
+      if (this.newpwd === '' || this.newpwd2 === '') {
+        this.disable = true
+      } else {
+        if (this.newpwd !== this.newpwd2) {
+          this.disable = true
+          this.newpwd = '俩次密码不一样'
+        } else {
+          this.disable = false
+          var data = {
+            phone: localStorage.getItem('phone'),
+            password: this.newpwd
+          }
+          setNewPassWord(data).then(res => {
+            if (!res.data.error_code) {
+              console.log('修改密码成功：' + this.newpwd)
+              this.$router.push('/login')
+            } else {
+              console.log('修改密码失败')
+            }
+          })
+        }
+      }
+    }
+  },
+  watch: {
+    newpwd () {
+      if (this.newpwd !== '' && this.newpwd2 !== '') {
+        this.disable = false
+      } else {
+        this.disable = true
+      }
+      // this.disable = (this.newpwd !== '' && this.newpwd2 !== '') ? false : true
+    },
+    newpwd2 () {
+      if (this.newpwd !== '' && this.newpwd2 !== '') {
+        this.disable = false
+      } else {
+        this.disable = true
+      }
     }
   }
 }
@@ -32,6 +73,11 @@ export default {
 	}
 	.margin{
 		margin-bottom: 50px;
+	}
+	.grey{
+		background: grey;
+		border: none;
+		color: white;
 	}
 	P{
 		text-align: center;
@@ -50,8 +96,6 @@ export default {
 		border: 1px solid #ca3232;
 		border-radius: 4px;
 		line-height: 40px;
-	}
-	.red{
 		background: #ca3232;
 		color: white;
 	}
