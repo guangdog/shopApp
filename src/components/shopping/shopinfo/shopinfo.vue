@@ -71,7 +71,7 @@
         <p><img src="../../../assets/images/shopping/info/own.png"></p>
         <p>收藏</p>
       </div>
-      <div class="btn" @click="pushshopcar()">加入购物车</div>
+      <div class="btn" :class="{active: active}" @click="pushshopcar()">加入购物车</div>
       <div class="btn">立即购买</div>
     </div>
 
@@ -108,10 +108,26 @@ export default {
           disableOnInteraction: false
         }
       },
+      active: false,
       count: 0
     }
   },
   created () {
+    // 用户未登录
+    if (!localStorage.getItem('user')) {
+      this.count = 0
+      this.active = false
+    } else {
+      // 用户已登录
+      this.active = true
+      if (localStorage.getItem('goodsdata')) {
+        var arr = JSON.parse(localStorage.getItem('goodsdata'))
+        for (let i = 0; i < arr.length; i++) {
+          this.count += arr[i].number
+        }
+      }
+    }
+
     var id = this.$route.params.id
     getShopInfoById({ id: id }).then(res => {
       this.obj = res.data.data
@@ -124,12 +140,6 @@ export default {
         }
       }
     })
-    if (localStorage.getItem('goodsdata')) {
-      var arr = JSON.parse(localStorage.getItem('goodsdata'))
-      for (let i = 0; i < arr.length; i++) {
-        this.count += arr[i].number
-      }
-    }
   },
   methods: {
     back () {
@@ -141,27 +151,29 @@ export default {
     },
     // 加入购物车
     pushshopcar () {
-      this.count++
-      if (!localStorage.getItem('goodsdata')) {
-        var str = JSON.stringify([{id: this.obj.id, name: this.obj.goodsname, img: this.obj.pic0, price: this.obj.price, oldprice: this.obj.parameter, number: 1}])
-        localStorage.setItem('goodsdata', str)
-      } else {
-        var data = localStorage.getItem('goodsdata')
-        var arr = JSON.parse(data)
-        var type = false
-        // 查询数据中是否有改商品 有则数量增加
-        for (let i = 0; i < arr.length; i++) {
-          if (arr[i].id === this.obj.id) {
-            arr[i].number++
-            type = true
-            break
+      if (this.active) {
+        this.count++
+        if (!localStorage.getItem('goodsdata')) {
+          var str = JSON.stringify([{id: this.obj.id, name: this.obj.goodsname, img: this.obj.pic0, price: this.obj.price, oldprice: this.obj.parameter, number: 1}])
+          localStorage.setItem('goodsdata', str)
+        } else {
+          var data = localStorage.getItem('goodsdata')
+          var arr = JSON.parse(data)
+          var type = false
+          // 查询数据中是否有改商品 有则数量增加
+          for (let i = 0; i < arr.length; i++) {
+            if (arr[i].id === this.obj.id) {
+              arr[i].number++
+              type = true
+              break
+            }
           }
+          if (type === false) { // 没有则向数组里添加
+            arr.push({id: this.obj.id, name: this.obj.goodsname, img: this.obj.pic0, price: this.obj.price, oldprice: this.obj.parameter, number: 1})
+          }
+          data = JSON.stringify(arr)
+          localStorage.setItem('goodsdata', data)
         }
-        if (type === false) { // 没有则向数组里添加
-          arr.push({id: this.obj.id, name: this.obj.goodsname, img: this.obj.pic0, price: this.obj.price, oldprice: this.obj.parameter, number: 1})
-        }
-        data = JSON.stringify(arr)
-        localStorage.setItem('goodsdata', data)
       }
     },
     // 跳转购物车
@@ -311,7 +323,7 @@ export default {
 }
 .more>div:first-child>.red{
   color: #ca3232;
-  border-bottom: 2px solid #ca3232; 
+  border-bottom: 1.5px solid #ca3232; 
 }
 .more>div:first-child{
   width: 100%;
@@ -382,8 +394,13 @@ export default {
   color: white;
 }
 .footer>.btn:nth-of-type(3){
-  background: #ff6060;
-  width: 34%;  
+  box-sizing: border-box;
+  border-left: 1px solid #dddddd; 
+  width: 34%;
+  background: gainsboro;
+}
+.footer>.active{
+  background: #ff6060 !important;
 }
 .footer>.btn:nth-of-type(4){
   background: #ca3232;

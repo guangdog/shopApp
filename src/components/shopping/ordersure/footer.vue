@@ -1,7 +1,7 @@
 <template>
   <div class="footer">
-    <div>总计：￥</div>
-    <div>确认支付</div>
+    <div>总计：￥{{sum}}</div>
+    <div @click="gopay">确认支付</div>
   </div>
 </template>
 <script>
@@ -13,7 +13,12 @@ export default {
   },
   methods: {
     gopay () {
-      this.$router.push('/shopping/shoppingcar')
+      this.$router.push('/paytype')
+    }
+  },
+  computed: {
+    sum () {
+      return this.$store.state.sumPrice
     }
   }
 }
@@ -25,11 +30,12 @@ export default {
   position: fixed;
   bottom: 0;
   width: 100%;
+  background: white;
   height: 50px;
 }
 .footer>div:first-child{
   float: left;
-  margin-left: 6%;
+  margin-left: 3%;
   color: #ca3232;
   line-height: 50px;
   font-size: 16px;

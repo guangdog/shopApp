@@ -1,17 +1,17 @@
 <template>
-  <div keep-alive>
-    <homeheader></homeheader>
-    <homebanner :banner="dataObj.bannerList" :height="'50'"></homebanner>
-    <homemenu></homemenu>
-    <recommendcol2 :recommend="dataObj.weekRecommend" :color="'#ff8400'">
-      <p slot="title" class="title"><span class="right">更多好货</span><span class="left gery" style="border-bottom: 1px solid #ca3232;color: #ca3232;">本月主打</span></p></slot>
-    </recommendcol2>
-    <recommendcol2 :recommend="dataObj.monthRecommend" :color="'#cccccc'">
-      <p slot="title" class="title"><span class="right">更多主打</span><span class="left orange" style="border-bottom: 1px solid #d24aff;color: #d24aff;">本周主打</span></p></slot>
-    </recommendcol2>
-    <recommendcol3 :homeRecommend="dataObj.homeRecommend"></recommendcol3>
-    <recommendcol1 :recommendList="dataObj.recommendList"></recommendcol1>
-  </div>
+    <div>
+      <homeheader></homeheader>
+      <homebanner :banner="dataObj.bannerList" :height="'50'"></homebanner>
+      <homemenu></homemenu>
+      <recommendcol2 :recommend="dataObj.weekRecommend" :color="'#ff8400'">
+        <p slot="title" class="title"><span class="right">更多好货</span><span class="left gery" style="border-bottom: 1px solid #ca3232;color: #ca3232;">本月主打</span></p></slot>
+      </recommendcol2>
+      <recommendcol2 :recommend="dataObj.monthRecommend" :color="'#cccccc'">
+        <p slot="title" class="title"><span class="right">更多主打</span><span class="left orange" style="border-bottom: 1px solid #d24aff;color: #d24aff;">本周主打</span></p></slot>
+      </recommendcol2>
+      <recommendcol3 :homeRecommend="dataObj.homeRecommend"></recommendcol3>
+      <recommendcol1 :recommendList="dataObj.recommendList"></recommendcol1>
+    </div>
 </template>
 <script>
 import { selectData } from '../../../api/shopping'

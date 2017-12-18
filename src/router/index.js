@@ -10,13 +10,16 @@ import personal from '@/components/shopping/personal/personal.vue'
 import shoppingcar from '@/components/shopping/shoppingcar/shoppingcar.vue'
 import shopinfo from '@/components/shopping/shopinfo/shopinfo.vue'
 import ordersure from '@/components/shopping/ordersure/ordersure.vue'
+import paytype from '@/components/shopping/paytype/paytype.vue'
+import addresschoose from '@/components/shopping/addresschoose/addresschoose.vue'
+import orderinfo from '@/components/shopping/orderinfo/orderinfo.vue'
 
 Vue.use(Router)
 
 export default new Router({
   // mode: 'history',
   routes: [
-    {path: '/', redirect: 'login'},
+    {path: '/', redirect: 'shopping'},
     {path: '/login', component: startPage},
     {path: '/signRegister/:type', component: signRegister},
     {path: '/forgetPwd/:id', component: forgetPwd},
@@ -44,6 +47,9 @@ export default new Router({
       ]
     },
     {path: '/shopinfo/:id', component: shopinfo},
-    {path: '/ordersure', component: ordersure}
+    {path: '/ordersure', component: ordersure},
+    {path: '/paytype', component: paytype},
+    {path: '/addresschoose', component: addresschoose},
+    {path: '/orderinfo/:bh/:status', component: orderinfo}
   ]
 })

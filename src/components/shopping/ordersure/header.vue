@@ -1,11 +1,11 @@
 <template>
   <div class="header">
     <header>
-      <div class="left" @click="back()"><img src="">返回</div>
+      <div class="left" @click="back()"><img src="../../../assets/images/shopping/order/back.jpg">返回</div>
       <div class="right">
         <img src="../../../assets/images/shopping/talk.png">
       </div>
-      <h2>购物车</h2>
+      <h2>订单确认</h2>
     </header>
     <div style="height: 50px"></div>
   </div>
@@ -49,12 +49,17 @@ export default {
     margin-left: 8px;
   }
   header h2{
-    font-size: 1.3rem; 
+    font-size: 1.2rem; 
     text-align: center;
   }
   .left{
     position: absolute;
-    left: 3%;
+    left: 0%;
+  }
+  .left img{
+    margin-right: 5px;
+    height: 30px;
+    vertical-align: -10px;
   }
   header .border{
     display: inline-block;

@@ -14,6 +14,7 @@
         <div v-if="!arr.length">
           <p class="null">您的购物车空空如也。。。</p>
         </div>
+        <div class="sum" v-show="status">小计：<span>￥{{sum}}</span></div>
     </div>
   </div>
 </template>
@@ -78,6 +79,9 @@ export default {
     },
     dialog () {
       return this.$store.state.dialog
+    },
+    sum () {
+      return this.$store.state.sumPrice
     }
   },
   watch: {
@@ -105,6 +109,14 @@ export default {
   }
   .content p{
     width: 100%;
+  }
+  .sum{
+    border-top: 1px solid #dddddd;
+    line-height: 36px;
+    margin-left: 3%;
+  }
+  .sum span{
+    color: #ca3232;
   }
   .checkbox{
     background: none;

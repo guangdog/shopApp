@@ -58,7 +58,7 @@ export default {
           // 登录发送数据判断用户与密码是否正确
           LoginByPhone(options).then((res) => {
             if (!res.data['error_code']) {
-              // this.$store.commit(res.data.data)
+              localStorage.setItem('user', this.phone)
               this.$router.push('/shopping')
             } else {
               this.phone = '手机号码或密码不正确'
