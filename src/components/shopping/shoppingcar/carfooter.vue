@@ -69,7 +69,7 @@ export default {
   },
   watch: {
     listencheckIndex (val) {
-      if (val.indexOf(0) === -1) {
+      if (val.indexOf(0) === -1 && val !== '') {
         this.bool = true
       } else {
         this.bool = false

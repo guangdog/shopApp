@@ -34,14 +34,19 @@ export default {
   methods: {
     queryToLocal () {
       this.str = ''
-      if (localStorage.getItem('goodsdata') !== null) {
+      if (localStorage.getItem('goodsdata')) {
         this.arr = JSON.parse(localStorage.getItem('goodsdata'))
+        console.log(this.arr.length)
         for (var i = 0; i < this.arr.length; i++) {
           this.str += 0
           this.countArr.push({num: this.arr[i].number, pri: this.arr[i].price})
         }
-        this.$store.commit('checkchoose', this.str)
         this.$store.commit('countprice', this.countArr)
+      } else {
+        this.arr = []
+        this.str = ''
+        this.$store.commit('checkchoose', this.str)
+        this.$store.commit('countprice', [])
       }
     },
     decrease (i) {
@@ -93,7 +98,7 @@ export default {
     dialog (val) {
       if (!val) {
         this.queryToLocal()
-        console.log(this.str)
+        this.$store.commit('countprice', [])
       }
     }
   }
