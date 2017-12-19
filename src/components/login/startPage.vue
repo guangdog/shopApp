@@ -1,5 +1,8 @@
 <template>
   <div class="startpage">
+		<div class="header">
+			<p @click="back()"><img src="../../assets/images/back.png">返回</p>
+		</div>
   	<img id="logo" src="../../assets/images/logo.png" />
 		<div class="box">
 			<p><button>微信一键登录</button><img src="../../assets/images/wx.jpg"></p>
@@ -22,6 +25,9 @@ export default {
     },
     register () {
       this.$router.push('/signRegister/register')
+    },
+    back () {
+      this.$router.push('/')
     }
   }
 }
@@ -93,5 +99,21 @@ button{
 	color: white;
 	font-size: 10px;
 	text-align: center;
+}
+.header p{
+	color: white;
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	height: 25px;
+	font-size: 14px;
+	line-height: 20px;
+}
+.header p img{
+	vertical-align: -4px;
+	margin-top: 4px;
+	width: 15px;
+	height: 20px;
+	margin-right: 2px;
 }
 </style>
