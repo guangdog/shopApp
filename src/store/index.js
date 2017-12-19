@@ -38,13 +38,17 @@ const store = new Vuex.Store({
     },
     // 购物车商品总价
     countprice (state, data) {
-      state.sumPrice = 0
-      for (var i = 0; i < data.length; i++) {
-        if (+state.checkIndex[i]) {
-          state.sumPrice += Number(data[i].num * data[i].pri)
+      if (data !== []) {
+        state.sumPrice = 0
+        for (var i = 0; i < data.length; i++) {
+          if (+state.checkIndex[i]) {
+            state.sumPrice += Number(data[i].num * data[i].pri)
+          }
         }
+        state.sumPrice = state.sumPrice.toFixed(2)
+      } else {
+        state.sumPrice = 0.00
       }
-      state.sumPrice = state.sumPrice.toFixed(2)
     }
   }
 })
