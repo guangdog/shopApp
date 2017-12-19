@@ -24,9 +24,11 @@ export default {
   },
   methods: {
     zfb () {
+      localStorage.removeItem('goodsdata')
       this.$router.push('/shopping/ordermanage')
     },
     wechat () {
+      localStorage.removeItem('goodsdata')
       this.$router.push('/shopping/ordermanage')
     }
   }
