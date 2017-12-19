@@ -21,13 +21,16 @@ export default {
     sure () {
       var str = localStorage.getItem('goodsdata')
       var arr = JSON.parse(str)
-      console.log(this.$store.state.checkIndex)
-      for (var i = 0; i < this.$store.state.checkIndex.length; i++) {
-        if (+this.$store.state.checkIndex[i]) {
-          arr.splice(i, 1)
+      if (arr.length === 1 || this.$store.state.checkIndex.indexOf(0) === -1) {
+        localStorage.removeItem('goodsdata')
+      } else {
+        for (var i = 0; i < this.$store.state.checkIndex.length; i++) {
+          if (+this.$store.state.checkIndex[i]) {
+            arr.splice(i, 1)
+          }
         }
+        localStorage.setItem('goodsdata', JSON.stringify(arr))
       }
-      localStorage.setItem('goodsdata', JSON.stringify(arr))
       this.$store.commit('dialogshow', false)
     },
     cancle () {
