@@ -1,5 +1,6 @@
 <template>
-  <div class="goods" @click="goorderinfo">
+<div>
+  <div v-show="info" class="goods" @click="goorderinfo">
     <div class="head">
       <div>订单编号： 00001451454</div>
       <div>待付款</div>
@@ -19,12 +20,16 @@
     </div>
     <div class="sum">共{{arr.length}}件商品 <span>合计：<span>￥{{+sum+25}}.00</span></span>(运费￥25.00)</div>
   </div>
+  <div style="text-align: center;margin-top: 30px;" v-show="!info">您还未有代付款的订单，快去购物吧！</div>
+</div>
+
 </template>
 <script>
 export default {
   data () {
     return {
-      arr: []
+      arr: [],
+      info: false
     }
   },
   created () {
@@ -35,6 +40,9 @@ export default {
       this.str = ''
       if (localStorage.getItem('goodsdata') !== null) {
         this.arr = JSON.parse(localStorage.getItem('goodsdata'))
+        this.info = true
+      } else {
+        this.info = false
       }
     },
     goorderinfo () {
@@ -43,7 +51,11 @@ export default {
   },
   computed: {
     sum () {
-      return this.$store.state.sumPrice
+      var sum = 0
+      for (var i = 0; i < this.arr.length; i++) {
+        sum += +this.arr[i].price
+      }
+      return sum
     }
   }
 }
