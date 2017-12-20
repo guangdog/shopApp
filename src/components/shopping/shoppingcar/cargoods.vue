@@ -41,6 +41,7 @@ export default {
           this.str += 0
           this.countArr.push({num: this.arr[i].number, pri: this.arr[i].price})
         }
+        this.$store.commit('checkchoose', this.str)
         this.$store.commit('countprice', this.countArr)
       } else {
         this.arr = []
