@@ -5,8 +5,8 @@
         <p><img src="../../../assets/images/shopping/icon2.png"></p>        
         <p>设置</p>
       </div>
-      <div>
-        <img  :class="{img:!username}" :src="userimg">
+      <div @click.capture="lessen" :class="{tolarge: imgLarge}">
+        <img @click.stop="enlarge" :class="{img:!username}" :src="userimg">
         <p v-if="username">{{username}}</p>
       </div>
     </div>
@@ -64,9 +64,10 @@
 export default {
   data () {
     return {
-      userimg: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3857518154,773375887&fm=27&gp=0.jpg',
+      userimg: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1406844799,3438726003&fm=27&gp=0.jpg',
       username: undefined,
-      owninfoarr: [0, 0, 0]
+      owninfoarr: [0, 0, 0],
+      imgLarge: false
     }
   },
   created () {
@@ -75,11 +76,11 @@ export default {
   methods: {
     select () {
       if (localStorage.getItem('user')) {
-        this.userimg = 'http://img0.imgtn.bdimg.com/it/u=2232846671,3368447981&fm=27&gp=0.jpg'
+        this.userimg = 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1892424694,1604667454&fm=27&gp=0.jpg'
         this.username = localStorage.getItem('user')
         this.owninfoarr = [8, 4, 250]
       } else {
-        this.userimg = 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3857518154,773375887&fm=27&gp=0.jpg'
+        this.userimg = 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1406844799,3438726003&fm=27&gp=0.jpg'
         this.username = undefined
         this.owninfoarr = [0, 0, 0]
       }
@@ -90,6 +91,14 @@ export default {
     },
     login () {
       this.$router.push('/login')
+    },
+    // 放大用户头像
+    enlarge () {
+      this.imgLarge = true
+    },
+    // 缩小头像
+    lessen () {
+      this.imgLarge = false
     }
   }
 }
@@ -104,7 +113,7 @@ export default {
     padding: 10px 3%;
     width: 100%;
     height: 50vw;
-    background: url(https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=5608933,1123742943&fm=200&gp=0.jpg);
+    background: url(https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=4254879161,3610927880&fm=27&gp=0.jpg);
     background-size: 100% 100%;
     position: relative;
   }
@@ -148,6 +157,26 @@ export default {
   }
   .user>div:nth-child(2) a{
     color: white;
+  }
+  .user>.tolarge{
+    top: 0 !important;
+    left: 0;
+    position: fixed;
+    background: #f1f1f1;
+    width: 100vw !important;
+    height: 100vh;
+    z-index: 100;
+  }
+  .user>.tolarge>img{
+    left: 0 !important;
+    width: 90vw;
+    height: 90vw;
+    margin-left: 5vw;
+    border-radius: 0; 
+    margin-top: calc( (100vh - 90vw) / 2);
+  }
+  .user>.tolarge>p{
+    display: none;
   }
   .owninfo{
     border-top: 1px solid #dddddd;
